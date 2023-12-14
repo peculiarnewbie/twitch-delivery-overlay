@@ -1,3 +1,7 @@
 #plasmo-shadow-container {
   pointer-events: none !important;
 }
+
+p {
+  margin: 0px;
+}

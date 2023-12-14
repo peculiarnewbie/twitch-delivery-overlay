@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 
+import { sendToContentScript } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 function IndexPopup() {
@@ -21,7 +22,10 @@ function IndexPopup() {
 
   const setWidth = async () => {
     await storage.set("video-width", data)
-    await storage.primaryClient.set({ ["video-width"]: data })
+    const resp = await sendToContentScript({
+      name: "resize",
+      body: data
+    })
     const size = await storage.get("video-width")
     setInStorage(parseInt(size))
   }
@@ -35,33 +39,33 @@ function IndexPopup() {
       style={{
         display: "flex",
         flexDirection: "column",
-        padding: 16,
-        width: "200px"
+        padding: 4,
+        width: "200px",
+        margin: "0px"
       }}>
-      <h2>
-        Welcome to your
-        <a href="https://www.plasmo.com" target="_blank">
-          {" "}
-          Plasmo
-        </a>{" "}
-        Extension!
-      </h2>
+      <p style={{ margin: "0px", marginBottom: "10px" }}>change size:</p>
+      <p style={{ margin: "0px" }}>{data}</p>
       <input
+        min={70}
         onChange={(e) => setData(parseInt(e.target.value))}
         value={data}
-        type="number"
+        type="range"
       />
       <button
         onClick={() => {
           setWidth()
         }}>
-        set
+        set video size
       </button>
-      <p>{data}</p>
-      <p>in storage: {inStorage}</p>
-      <a href="https://docs.plasmo.com" target="_blank">
-        View Docs
-      </a>
+      <p style={{ marginTop: "20px", fontWeight: 700 }}>
+        current size: {inStorage}
+      </p>
+      <p style={{ marginBottom: "0px" }}>
+        {"made by: "}
+        <a href="https://peculiarnewbie.com" target="_blank">
+          peculiarnewbie
+        </a>
+      </p>
     </div>
   )
 }

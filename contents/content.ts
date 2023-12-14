@@ -6,6 +6,7 @@ import type {
   PlasmoGetStyle
 } from "plasmo"
 
+import type { PlasmoMessaging } from "@plasmohq/messaging"
 import { Storage } from "@plasmohq/storage"
 
 export const config: PlasmoCSConfig = {
@@ -53,21 +54,22 @@ const videoOverlay = document.getElementsByClassName("video-player__overlay")
 
 videoOverlay[0].prepend(tempImg)
 
-const reduceVideoSize = async () => {
-  const storage = new Storage({
-    area: "sync",
-    allCopied: true,
-    copiedKeyList: ["video-width", "wth"]
-  })
-  storage.setNamespace("man")
-  await storage.set("man", 80)
-  await storage.set("wth", "smh")
-  const videoWidth = await storage.primaryClient.get("video-width")
+const storage = new Storage({
+  area: "sync",
+  allCopied: true,
+  copiedKeyList: ["video-width", "wth"]
+})
+
+const resizeVideo = async (size?: number) => {
+  let videoWidth: number
+  if (size) videoWidth = size
+  else {
+    videoWidth = parseInt(await storage.get("video-width"))
+  }
   console.log("width:", await storage.get("video-width"))
 
   console.log("man")
 
-  console.log("all storage", storage.getNamespacedKey(""), "k")
   console.log(await storage.get("wth"), await storage.get("man"))
 
   const mainVideo = document.getElementsByTagName("video")[0]
@@ -76,4 +78,4 @@ const reduceVideoSize = async () => {
   mainVideo.style.transform = "translateX(-50%)"
 }
 
-reduceVideoSize()
+resizeVideo()
