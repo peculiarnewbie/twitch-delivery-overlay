@@ -1,8 +1,8 @@
 {
-  "name": "twitch-delivery-overlay",
-  "displayName": "Twitch delivery overlay",
+  "name": "twitch-image-overlay",
+  "displayName": "Twitch image overlay",
   "version": "0.0.1",
-  "description": "overlay a delivery sponsor on top of twitch video feed",
+  "description": "overlay an image on top of twitch video feed",
   "author": "peculiarnewbie",
   "scripts": {
     "dev": "plasmo dev",

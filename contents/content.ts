@@ -68,10 +68,6 @@ const resizeVideo = async (size?: number) => {
   }
   console.log("width:", await storage.get("video-width"))
 
-  console.log("man")
-
-  console.log(await storage.get("wth"), await storage.get("man"))
-
   const mainVideo = document.getElementsByTagName("video")[0]
   mainVideo.style.width = `${videoWidth}%`
   mainVideo.style.left = "50%"
